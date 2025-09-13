@@ -2,6 +2,26 @@ const express = require("express");
 
 const app = express();
 
+app.use( '/test', 
+
+    ( req, res, next ) => {
+        console.log(1);
+        res.send(1);
+    },
+
+    ( req, res, next ) => {
+        console.log(2);
+        res.send(2);
+    }
+
+)
+
+app.use( '/user', ( req, res ) => {
+    //leave it empty
+    res.send("user is Shivkar Singh ")
+    console.log("empty1");
+});
+
 app.get( "/user", (req,res) => {
 
     const obj = {
@@ -10,6 +30,21 @@ app.get( "/user", (req,res) => {
     };
 
     res.send(obj);
+
+});
+
+app.get( "/product" ,( req, res ) => {
+
+    console.log(req.query);
+    res.send(`id = ${req.query.id} && price = ${req.query.price}`);
+
+});
+
+
+app.get( "/product/:id", ( req, res ) => {
+
+    console.log(req.params.id);
+    res.send(`id = ${req.params.id}`);
 
 });
 
@@ -26,7 +61,7 @@ app.delete( "/user", (req,res) => {
 
     // deleting it
     res.send("Deleted Successfully");
-    
+
 });
 
 
